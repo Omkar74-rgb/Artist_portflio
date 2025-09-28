@@ -1,0 +1,1112 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pooja Palsambkar - Fine Artist</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root {
+            --primary-color: #4A69BD;
+            --secondary-color: #78909c;
+            --text-color: #2c3e50;
+            --bg-color: #f8f8f0;
+            --shadow-light: 0 4px 15px rgba(0, 0, 0, 0.05);
+            --shadow-strong: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            background: linear-gradient(to bottom, #fafafa, #f5f5f5);
+            overflow-x: hidden;
+            transition: background 0.5s ease;
+        }
+
+        /* Header and Navigation */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1.25rem 2rem;
+            transition: all 0.3s ease;
+            box-shadow: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header .logo {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            font-size: 1.75rem;
+            color: var(--primary-color);
+            text-decoration: none;
+            letter-spacing: -0.5px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Nav styling for the sliding menu */
+        header nav {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 80%;
+            max-width: 300px;
+            height: 100vh;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+            transform: translateX(100%);
+            transition: transform 0.3s ease-in-out;
+            z-index: 2000;
+            padding: 2rem;
+            padding-top: 5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            overflow-y: auto;
+        }
+
+        header nav.is-open {
+            transform: translateX(0);
+        }
+
+        /* Close button inside the menu */
+        #close-btn {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            font-size: 2rem;
+            cursor: pointer;
+            color: var(--primary-color);
+        }
+
+        header nav ul {
+            display: flex;
+            flex-direction: column;
+            list-style: none;
+            font-weight: 500;
+            width: 100%;
+        }
+
+        header nav ul#gallery-submenu {
+            list-style: none;
+        }
+
+        header nav ul#photography-submenu {
+            list-style: none;
+        }
+
+        header nav ul li {
+            margin: 0.5rem 0;
+            width: 100%;
+        }
+
+        header nav ul li a {
+            color: #555;
+            text-decoration: none;
+            position: relative;
+            transition: color 0.3s ease;
+            display: block;
+            padding: 0.5rem;
+        }
+
+        header nav ul li a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary-color);
+            transition: width 0.3s ease-in-out;
+        }
+
+        header nav ul li a:hover,
+        header nav ul li a.active {
+            color: var(--primary-color);
+        }
+
+        header nav ul li a:hover::after,
+        header nav ul li a.active::after {
+            width: 100%;
+        }
+
+        .hamburger {
+            display: block;
+            font-size: 2rem;
+            cursor: pointer;
+            color: var(--primary-color);
+            transition: transform 0.3s ease;
+            z-index: 3000;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            text-align: center;
+            background: url('https://images.unsplash.com/photo-1549497525-4c0175b28d05?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') no-repeat center center/cover;
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(245, 245, 245, 0.6);
+            backdrop-filter: blur(2px);
+            z-index: 1;
+        }
+
+        .hero-content {
+            z-index: 2;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .hero-content h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 4.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: #333;
+            letter-spacing: -1px;
+            animation: slideUp 1s ease-out;
+        }
+
+        .hero-content p {
+            font-size: 1.5rem;
+            color: #555;
+            animation: slideUp 1.2s ease-out;
+        }
+
+        /* Image Carousel Styling */
+        .image-carousel {
+            position: relative;
+            width: 80%;
+            max-width: 500px;
+            aspect-ratio: 4 / 3;
+            border: 4px solid #fff;
+            border-radius: 1rem;
+            box-shadow: var(--shadow-strong);
+            overflow: hidden;
+            margin-top: 2rem;
+        }
+
+        .carousel-images {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .carousel-images a {
+            min-width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .carousel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.4);
+            color: white;
+            border: none;
+            padding: 0.5rem;
+            cursor: pointer;
+            border-radius: 50%;
+            transition: background 0.3s ease;
+            z-index: 10;
+        }
+
+        .carousel-btn:hover {
+            background: rgba(0, 0, 0, 0.6);
+        }
+
+        #prev-btn {
+            left: 1rem;
+        }
+
+        #next-btn {
+            right: 1rem;
+        }
+
+        /* General Section Styling */
+        .section {
+            padding: 6rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .section h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            font-weight: 600;
+            margin-bottom: 3rem;
+            color: #333;
+            position: relative;
+            display: inline-block;
+        }
+
+        /* About Section */
+        #about .about-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        #about .profile-image {
+            width: 250px;
+            height: 250px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid #fff;
+            box-shadow: var(--shadow-strong);
+            transition: transform 0.3s ease;
+        }
+
+        #about .profile-image:hover {
+            transform: scale(1.05);
+        }
+
+        #about .about-text {
+            max-width: 800px;
+            text-align: justify;
+            font-size: 1.125rem;
+            color: #444;
+        }
+
+        #about .list-container {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: left;
+            margin-top: 2rem;
+        }
+
+        #about .list-container h3 {
+            text-align: center;
+            font-size: 1.75rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        #about .list-container ul {
+            list-style-type: disc;
+            padding-left: 1.5rem;
+            font-size: 1.125rem;
+            color: #444;
+        }
+
+        #about .list-container ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Gallery Section */
+        #gallery {
+            background-color: #f0f0f5;
+        }
+
+        .art-grid {
+            display: grid;
+            gap: 1.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            margin-top: 2rem;
+        }
+
+        .art-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 0.75rem;
+            box-shadow: var(--shadow-light);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        .art-item:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-strong);
+        }
+
+        .art-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .art-item:hover img {
+            transform: scale(1.05);
+        }
+
+        /* .art-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        } */
+
+        .art-item:hover .art-overlay {
+            opacity: 1;
+        }
+
+        .art-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+
+        .art-details {
+            font-size: 0.875rem;
+            color: #d1d5db;
+        }
+
+        /* Contact Section Specific Styles */
+        #contact .contact-content {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        #contact .contact-item {
+            display: flex;
+            align-items: center;
+            font-size: 1.125rem;
+            color: #444;
+            gap: 0.5rem;
+        }
+
+        #contact .contact-item .contact-link {
+            text-decoration: none;
+            color: #444;
+            transition: color 0.2s ease, transform 0.2s ease;
+        }
+
+        #contact .contact-item .contact-link:hover {
+            color: var(--primary-color);
+            transform: translateY(-2px);
+        }
+
+        #contact .contact-item svg {
+            color: var(--primary-color);
+        }
+
+        /* === NEW: LIGHTBOX STYLES === */
+        .lightbox {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            padding-top: 60px;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            overflow: auto;
+        }
+
+        .lightbox-content {
+            margin: auto;
+            display: block;
+            max-width: 90%;
+            max-height: 80%;
+        }
+
+        #caption {
+            margin: auto;
+            display: block;
+            width: 80%;
+            text-align: center;
+            color: #fff;
+            padding: 10px 0;
+        }
+
+        .close {
+            position: absolute;
+            top: 20px;
+            right: 35px;
+            color: #fff;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        .close:hover {
+            color: #bbb;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <a href="#hero" class="logo">Pooja Palsambkar</a>
+        <button id="hamburger-btn" class="hamburger focus:outline-none" aria-label="Toggle navigation">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="lucide lucide-menu">
+                <line x1="4" x2="20" y1="12" y2="12" />
+                <line x1="4" x2="20" y1="6" y2="6" />
+                <line x1="4" x2="20" y1="18" y2="18" />
+            </svg>
+        </button>
+        <nav id="main-nav">
+            <button id="close-btn" class="focus:outline-none" aria-label="Close navigation">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="lucide lucide-x">
+                    <path d="M18 6 6 18" />
+                    <path d="m6 6 12 12" />
+                </svg>
+            </button>
+            <ul>
+                <li><a href="#hero" class="nav-link active">Home</a></li>
+                <li class="relative">
+                    <div class="flex items-center justify-between">
+                        <a href="#" id="about-toggle"
+                            class="nav-link font-medium text-gray-500 hover:text-gray-700 transition-colors">About
+                            Me</a>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            class="lucide lucide-chevron-down ml-2 transition-transform duration-300 transform-gpu">
+                            <polyline points="6 9 12 15 18 9" />
+                        </svg>
+                    </div>
+                    <ul id="about-submenu" class="hidden flex-col list-none pl-4 mt-2">
+                        <li><a href="#profile" class="nav-link block w-full text-left">Profile</a></li>
+                        <li><a href="#qualification" class="nav-link block w-full text-left">Qualification</a></li>
+                        <li><a href="#awards" class="nav-link block w-full text-left">Awards & Achievements</a></li>
+                        <li><a href="#exhibition" class="nav-link block w-full text-left">Exhibition</a></li>
+                        <li><a href="#gallery" class="gallery-link nav-link block w-full text-left"
+                                data-category="exhibition-photos">Exhibition Pictures</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <div class="flex items-center justify-between">
+                        <a href="#gallery" id="gallery-toggle"
+                            class="nav-link font-medium text-gray-500 hover:text-gray-700 transition-colors">Gallery</a>
+                    </div>
+                    <ul id="gallery-submenu" class="flex flex-col list-none pl-4 mt-2">
+                        <li><a href="#gallery" class="gallery-link nav-link block w-full text-left"
+                                data-category="figurative">Figurative works</a></li>
+                        <li><a href="#gallery" class="gallery-link nav-link block w-full text-left"
+                                data-category="portraits">Portraits</a></li>
+                        <li><a href="#gallery" class="gallery-link nav-link block w-full text-left"
+                                data-category="subjective">Subjective</a></li>
+                        <li><a href="#gallery" class="gallery-link nav-link block w-full text-left"
+                                data-category="landscape">Landscape</a></li>
+                        <li class="relative">
+                            <div class="flex items-center justify-between">
+                                <span id="photography-toggle"
+                                    class="nav-link font-medium text-gray-500 cursor-pointer">Photography</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    class="lucide lucide-chevron-down ml-2 transition-transform duration-300 transform-gpu">
+                                    <polyline points="6 9 12 15 18 9" />
+                                </svg>
+                            </div>
+                            <ul id="photography-submenu" class="hidden flex-col list-disc pl-4 mt-2">
+                                <li><a href="#gallery" class="gallery-link nav-link block w-full text-left"
+                                        data-category="nature-photo">Nature</a></li>
+                                <li><a href="#gallery" class="gallery-link nav-link block w-full text-left"
+                                        data-category="landscapes-photo">Landscapes</a></li>
+                                <li><a href="#gallery" class="gallery-link nav-link block w-full text-left"
+                                        data-category="cats-photo">Cats</a></li>
+                                <li><a href="#gallery" class="gallery-link nav-link block w-full text-left"
+                                        data-category="insects-photo">Insects</a></li>
+                                <li><a href="#gallery" class="gallery-link nav-link block w-full text-left"
+                                        data-category="birds-photo">Birds</a></li>
+                                <li><a href="#gallery" class="gallery-link nav-link block w-full text-left"
+                                        data-category="reptiles-photo">Reptiles</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="hero" class="hero">
+            <div class="hero-content">
+                <h1>Pooja Palsambkar</h1>
+                <p>Fine Artist</p>
+                <div class="image-carousel">
+                    <div id="carousel-images" class="carousel-images">
+                        <a href="Images/C1.jpg">
+                            <img src="Images/C1.jpg">
+                        </a>
+                        <a href="Images/c2.jpg">
+                            <img src="Images/c2.jpg" alt="Art piece titled 'Friends'">
+                        </a>
+                        <a href="Images/c3.jpg">
+                            <img src="Images/c3.jpg" alt="Art piece titled 'Still life'">
+                        </a>
+                        <a href="Images/c4.jpg">
+                            <img src="Images/c4.jpg" alt="Abstract painting of colors">
+                        </a>
+                        <a href="Images/c5.jpg">
+                            <img src="Images/c5.jpg" alt="Painting of a person">
+                        </a>
+                        <a href="Images/c6.jpg">
+                            <img src="Images/c6.jpg" alt="Painting of a person">
+                        </a>
+                    </div>
+                    <button id="prev-btn" class="carousel-btn" aria-label="Previous image">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            class="lucide lucide-chevron-left">
+                            <path d="m15 18-6-6 6-6" />
+                        </svg>
+                    </button>
+                    <button id="next-btn" class="carousel-btn" aria-label="Next image">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            class="lucide lucide-chevron-right">
+                            <path d="m9 18 6-6-6-6" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="section">
+            <h2>About Me</h2>
+            <div class="about-content">
+                <img src="Images/pfp.jpg" alt="Pooja Palsambkar's profile picture" class="profile-image mb-8">
+                <div id="profile" class="about-text">
+                    <p>I, Pooja Ashok Palsambkar, was born in 1997, at Villeparle - Mumbai - Maharashtra, India. From
+                        childhood I have always been fascinated by drawing and painting. After finishing schooling, my
+                        interest was cultivated during my teenage years and further developed when I opted to take my
+                        master’s degree in Portraiture. I studied painting at SNDT Women's University, Mumbai in 2021.
+                    </p>
+                    <p>After completing my studies in 2021, I delved even more into my art practice. Portraiture is
+                        always a challenging and fascinating subject for me, and I love to create all those emotions in
+                        my paintings. I felt a strong connection with people, and I painted day-to-day life that always
+                        surrounded me and all those movements I depicted into my canvases.</p>
+                    <p>In the initial stages, only Representational Art got deep rooted in my being. For some period, I
+                        worked in the Academic style and created Landscapes, still life and portraits. Portrait painting
+                        is my favorite subject and my profession also. Then I started painting on Figurative
+                        compositions. Most of my work is in oil painting medium. While doing this, the space division
+                        and a different approach to composition started getting important in my paintings. Human beings
+                        are an immaculate and essential part of nature which inspires me most. They have appealed to me
+                        to paint them relentlessly.</p>
+                    <p>My works are related to day to day life. I believe that such simple day to day situations provide
+                        me with the germ of ideas. I enjoy observing people in different moods, their gestures, postures
+                        & feelings. The connection between me and them. As soon as I get connected to a subject and it
+                        touches my inner core, it naturally comes into my art work. I received some prestigious
+                        achievements right from various Art Institutions and Art Societies in India. These paintings
+                        fetched me awards in the Professional category.</p>
+                    <p>One of the paintings was awarded by the Maharashtra state Art competition and The Bombay Art
+                        Society. I also received the CCRT Government Young Artist Scholarship. There were Held
+                        exhibitions in the Art Society of India. This style acclaimed awards from other States also. I
+                        am still working on the same subject to emphasize the different perspectives of Human beings.
+                    </p>
+                </div>
+
+                <div id="qualification" class="list-container">
+                    <h3>QUALIFICATION</h3>
+                    <ul>
+                        <li>2021 - Masters of Visual Arts - Portraiture</li>
+                        <li>2019 - Bachelor of Visual Arts</li>
+                    </ul>
+                </div>
+
+                <div class="flex flex-col md:flex-row md:space-x-24 w-full max-w-4xl">
+                    <div id="awards" class="list-container md:flex-1">
+                        <h3>AWARDS & ACHIEVEMENTS</h3>
+                        <ul>
+                            <li>2024 - Maharashtra State Art Award</li>
+                            <li>2024 - Bombay Art Society Award</li>
+                            <li>2023 - CCRT Young Artist Scholarship</li>
+                            <li>2022 - Varnika Art Society Award, Karnataka</li>
+                            <li>2022 - Art Plaza Merit</li>
+                            <li>2022 - International Fiesta Art Merit, Delhi</li>
+                            <li>2021 - Bombay Art Society</li>
+                            <li>2020 - Kalavarat National Art Merit, Ujjain</li>
+                        </ul>
+                    </div>
+
+                    <div id="exhibition" class="list-container mt-8 md:mt-0 md:flex-1">
+                        <h3>EXHIBITION</h3>
+                        <ul>
+                            <li>2023, 2022, 2021 - The Art Society of India, Mumbai</li>
+                            <li>2023 - Maharashtra State Art, Mumbai</li>
+                            <li>2023, 2022 - Indian Academy of Fine Arts, Amritsar</li>
+                            <li>2019 - Monsoon Art Show, Mumbai</li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <section id="gallery" class="section">
+            <h2 id="gallery-heading">Gallery</h2>
+            <div id="art-grid" class="art-grid">
+            </div>
+        </section>
+
+        <section id="contact" class="section">
+            <h2>Contact Me</h2>
+            <p class="text-xl mb-4 text-center text-gray-700">Pooja Palsambkar</p>
+            <div
+                class="contact-content md:flex md:flex-row md:justify-center md:items-center md:space-x-8 space-y-4 md:space-y-0">
+                <div class="contact-item">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="lucide lucide-phone-call mr-2">
+                        <path
+                            d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-3.37-2.94A19.5 19.5 0 0 1 2.24 8.63 2 2 0 0 1 4.42 6.5h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+                    </svg>
+                    <strong>Mobile:</strong>
+                    <a href="tel:+917045084197" class="contact-link">+91 7045084197</a>
+                </div>
+                <div class="contact-item">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="lucide lucide-mail mr-2">
+                        <rect width="20" height="16" x="2" y="4" rx="2" />
+                        <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+                    </svg>
+                    <strong>Email:</strong>
+                    <a href="mailto:ppalsambkar04@gmail.com" class="contact-link">ppalsambkar04@gmail.com</a>
+                </div>
+                <div class="contact-item">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="lucide lucide-instagram mr-2">
+                        <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
+                        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+                        <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
+                    </svg>
+                    <strong>Instagram:</strong>
+                    <a href="https://www.instagram.com/poojapal_22" target="_blank" class="contact-link">poojapal_22</a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <div id="lightbox" class="lightbox">
+        <span class="close">&times;</span>
+        <img class="lightbox-content" id="lightbox-img">
+        <div id="caption"></div>
+    </div>
+
+    <!-- Full-view container -->
+    <div id="fullview"
+        style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); justify-content:center; align-items:center; z-index:9999;">
+        <button id="close_fullview"
+            style="position:absolute; top:20px; right:30px; font-size:30px; background:none; border:none; color:white; cursor:pointer;">&times;</button>
+        <img id="fullview_img" style="max-width:90%; max-height:90%; margin:auto; display:block;">
+    </div>
+    <!-- Carousel-Fullview -->
+    <div id="carousel-fullview"
+        style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); justify-content:center; align-items:center; z-index:9999;">
+        <button id="carousel-close"
+            style="position:absolute; top:20px; right:30px; font-size:30px; background:none; border:none; color:white; cursor:pointer;">&times;</button>
+        <img id="carousel-img" style="max-width:90%; max-height:90%; margin:auto; display:block;">
+    </div>
+
+
+    <script>
+        // Function to set the active link
+        function setActiveLink(clickedElement) {
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+            });
+            clickedElement.classList.add('active');
+            if (clickedElement.id.endsWith('-toggle')) {
+                clickedElement.classList.add('active');
+            } else if (clickedElement.classList.contains('gallery-link')) {
+                document.getElementById('gallery-toggle').classList.add('active');
+            } else if (clickedElement.closest('#about-submenu')) {
+                document.getElementById('about-toggle').classList.add('active');
+            } else if (clickedElement.closest('#photography-submenu')) {
+                document.getElementById('photography-toggle').classList.add('active');
+                document.getElementById('gallery-toggle').classList.add('active');
+            }
+        }
+
+        // Smooth scroll for nav links
+        document.querySelectorAll('a[href^="#"], #photography-toggle').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                setActiveLink(this);
+                if (this.id === 'about-toggle' || this.id === 'photography-toggle') {
+                    e.preventDefault();
+                } else {
+                    const targetId = this.getAttribute('href');
+                    if (targetId && targetId !== '#') {
+                        document.querySelector(targetId).scrollIntoView({
+                            behavior: 'smooth'
+                        });
+                        mainNav.classList.remove('is-open');
+                        hamburgerBtn.classList.remove('hidden');
+                    }
+                }
+            });
+        });
+
+        // Get navigation elements
+        const hamburgerBtn = document.getElementById('hamburger-btn');
+        const closeBtn = document.getElementById('close-btn');
+        const mainNav = document.getElementById('main-nav');
+
+        hamburgerBtn.addEventListener('click', () => {
+            mainNav.classList.add('is-open');
+            hamburgerBtn.classList.add('hidden');
+        });
+
+        closeBtn.addEventListener('click', () => {
+            mainNav.classList.remove('is-open');
+            hamburgerBtn.classList.remove('hidden');
+        });
+
+        document.addEventListener('click', (event) => {
+            if (mainNav.classList.contains('is-open') && !mainNav.contains(event.target) && !hamburgerBtn.contains(event.target)) {
+                mainNav.classList.remove('is-open');
+                hamburgerBtn.classList.remove('hidden');
+            }
+        });
+
+        // Toggle 'About' submenu
+        const aboutToggle = document.getElementById('about-toggle');
+        const aboutSubmenu = document.getElementById('about-submenu');
+        const aboutChevron = aboutToggle.nextElementSibling;
+
+        aboutToggle.addEventListener('click', (e) => {
+            e.preventDefault();
+            aboutSubmenu.classList.toggle('hidden');
+            aboutChevron.classList.toggle('rotate-180');
+        });
+
+        // Toggle 'Photography' submenu
+        const photographyToggle = document.getElementById('photography-toggle');
+        const photographySubmenu = document.getElementById('photography-submenu');
+        const photographyChevron = photographyToggle.nextElementSibling;
+
+        photographyToggle.addEventListener('click', (e) => {
+            e.preventDefault();
+            photographySubmenu.classList.toggle('hidden');
+            photographyChevron.classList.toggle('rotate-180');
+        });
+
+        // Header background change on scroll
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.boxShadow = '0 2px 20px rgba(74, 105, 189, 0.1)';
+            } else {
+                header.style.boxShadow = 'none';
+            }
+        });
+
+        // --- Image Carousel Logic ---
+        const carouselImages = document.getElementById('carousel-images');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        let currentImageIndex = 0;
+        const totalImages = carouselImages.children.length;
+
+        function updateCarousel() {
+            const imageWidth = carouselImages.children[0].offsetWidth;
+            carouselImages.style.transform = `translateX(-${currentImageIndex * imageWidth}px)`;
+        }
+
+        nextBtn.addEventListener('click', () => {
+            currentImageIndex = (currentImageIndex + 1) % totalImages;
+            updateCarousel();
+        });
+
+        prevBtn.addEventListener('click', () => {
+            currentImageIndex = (currentImageIndex - 1 + totalImages) % totalImages;
+            updateCarousel();
+        });
+
+        window.addEventListener('resize', updateCarousel);
+
+        // --- Gallery Category Logic ---
+        const galleryHeading = document.getElementById('gallery-heading');
+        const artGrid = document.getElementById('art-grid');
+        const galleryLinks = document.querySelectorAll('.gallery-link');
+        const fullview = document.getElementById('fullview');
+        const fullview_img = document.getElementById('fullview_img');
+        const close_fullview = document.getElementById('close_fullview');
+
+        const galleryData = {
+            figurative: {
+                title: "Figurative Works",
+                images: [
+                    { src: "Images/f1.jpg", title: '', details: '' },
+                    { src: "Images/f2.jpg", title: '', details: '' },
+                    { src: "Images/f3.jpg", title: '', details: '' },
+                    { src: "Images/f4.jpg", title: '', details: '' },
+                    { src: "Images/f5.jpg", title: '', details: '' },
+                    { src: "Images/f6.jpg", title: '', details: '' },
+                    { src: "Images/f7.jpg", title: '', details: '' },
+                    { src: "Images/f8.jpg", title: '', details: '' },
+                    { src: "Images/f9.jpg", title: '', details: '' },
+                    { src: "Images/f10.jpg", title: '', details: '' },
+                ]
+            },
+            portraits: {
+                title: "Portraits",
+                images: [
+                    { src: "Images/p1.jpg", title: '', details: '' }, { src: "Images/p2.jpg", title: '', details: '' },
+                    { src: "Images/p3.jpg", title: '', details: '' }, { src: "Images/p4.jpg", title: '', details: '' },
+                    { src: "Images/p5.jpg", title: '', details: '' }, { src: "Images/p6.jpg", title: '', details: '' },
+                    { src: "Images/p7.jpg", title: '', details: '' }, { src: "Images/p8.jpg", title: '', details: '' },
+                    { src: "Images/p99.jpg", title: '', details: '' }, { src: "Images/p10.jpg", title: '', details: '' },
+                    { src: "Images/p11.jpg", title: '', details: '' }, { src: "Images/p12.jpg", title: '', details: '' },
+                    { src: "Images/p13.jpg", title: '', details: '' }, { src: "Images/p14.jpg", title: '', details: '' },
+                    { src: "Images/p15.jpg", title: '', details: '' }, { src: "Images/p16.jpg", title: '', details: '' },
+                    { src: "Images/p17.jpg", title: '', details: '' }, { src: "Images/p18.jpg", title: '', details: '' },
+                    { src: "Images/p19.jpg", title: '', details: '' }, { src: "Images/p20.jpg", title: '', details: '' },
+                ]
+            },
+            subjective: {
+                title: "Subjective Works",
+                images: [
+                    { src: "Images/s1.jpg", title: '', details: '' }, { src: "Images/s2.jpg", title: '', details: '' },
+                    { src: "Images/s3.jpg", title: '', details: '' }, { src: "Images/s4.jpg", title: '', details: '' },
+                    { src: "Images/s5.jpg", title: '', details: '' }, { src: "Images/s6.jpg", title: '', details: '' },
+                    { src: "Images/s7.jpg", title: '', details: '' }, { src: "Images/s8.jpg", title: '', details: '' },
+                    { src: "Images/s9.jpg", title: '', details: '' }, { src: "Images/s10.jpg", title: '', details: '' },
+                    { src: "Images/s11.jpg", title: '', details: '' }, { src: "Images/s12.jpg", title: '', details: '' },
+                    { src: "Images/s13.jpg", title: '', details: '' }, { src: "Images/s14.jpg", title: '', details: '' },
+                ]
+            },
+            landscape: {
+                title: "Landscape",
+                images: [
+                    { src: "Images/l1.jpg", title: '', details: '' }, { src: "Images/l2.jpg", title: '', details: '' },
+                    { src: "Images/l3.jpg", title: '', details: '' }, { src: "Images/l4.jpg", title: '', details: '' },
+                    { src: "Images/l5.jpg", title: '', details: '' }, { src: "Images/l6.jpg", title: '', details: '' },
+                    { src: "Images/l7.jpg", title: '', details: '' }, { src: "Images/l8.jpg", title: '', details: '' },
+                    { src: "Images/l9.jpg", title: '', details: '' }, { src: "Images/l10.jpg", title: '', details: '' },
+                ]
+            },
+            'nature-photo': {
+                title: "Nature Photography",
+                images: [
+                    { src: "Images/n1.jpg", title: "", details: "" }, { src: "Images/n2.jpg", title: "", details: "" },
+                    { src: "Images/n3.jpg", title: "", details: "" }, { src: "Images/n4.jpg", title: "", details: "" },
+                    { src: "Images/n5.jpg", title: "", details: "" }, { src: "Images/n6.jpg", title: "", details: "" },
+                    { src: "Images/n7.jpg", title: "", details: "" }, { src: "Images/n8.jpg", title: "", details: "" },
+                    { src: "Images/n9.jpg", title: "", details: "" }, { src: "Images/n10.jpg", title: "", details: "" },
+                    { src: "Images/n11.jpg", title: "", details: "" }, { src: "Images/n12.jpg", title: "", details: "" },
+                    { src: "Images/n13.jpg", title: "", details: "" }, { src: "Images/n14.jpg", title: "", details: "" },
+                    { src: "Images/n15.jpg", title: "", details: "" }, { src: "Images/n16.jpg", title: "", details: "" },
+                    { src: "Images/n17.jpg", title: "", details: "" }, { src: "Images/n18.jpg", title: "", details: "" },
+                    { src: "Images/n19.jpg", title: "", details: "" }, { src: "Images/n20.jpg", title: "", details: "" },
+                ]
+            },
+            'landscapes-photo': {
+                title: "Landscape Photography",
+                images: [
+                    { src: "Images/q1.jpg", title: "", details: "" }, { src: "Images/q2.jpg", title: "", details: "" },
+                    { src: "Images/q3.jpg", title: "", details: "" }, { src: "Images/q4.jpg", title: "", details: "" },
+                    { src: "Images/q5.jpg", title: "", details: "" }, { src: "Images/q6.jpg", title: "", details: "" },
+                    { src: "Images/q7.jpg", title: "", details: "" }, { src: "Images/q8.jpg", title: "", details: "" },
+                    { src: "Images/q9.jpg", title: "", details: "" }, { src: "Images/q10.jpg", title: "", details: "" },
+                    { src: "Images/q11.jpg", title: "", details: "" }, { src: "Images/q12.jpg", title: "", details: "" },
+                    { src: "Images/q13.jpg", title: "", details: "" }, { src: "Images/q14.jpg", title: "", details: "" },
+                    { src: "Images/q15.jpg", title: "", details: "" }, { src: "Images/q16.jpg", title: "", details: "" },
+                    { src: "Images/q17.jpg", title: "", details: "" }, { src: "Images/q18.jpg", title: "", details: "" },
+                    { src: "Images/q19.jpg", title: "", details: "" }, { src: "Images/q20.jpg", title: "", details: "" },
+                ]
+            },
+            'cats-photo': {
+                title: "Cat Photography",
+                images: [
+                    { src: "Images/a1.jpg", title: "", details: "" }, { src: "Images/a2.jpg", title: "", details: "" },
+                    { src: "Images/a3.jpg", title: "", details: "" }, { src: "Images/a4.jpg", title: "", details: "" },
+                    { src: "Images/a5.jpg", title: "", details: "" }, { src: "Images/a6.jpg", title: "", details: "" },
+                    { src: "Images/a7.jpg", title: "", details: "" }, { src: "Images/a8.jpg", title: "", details: "" },
+                    { src: "Images/a9.jpg", title: "", details: "" }, { src: "Images/a10.jpg", title: "", details: "" },
+                    { src: "Images/a11.jpg", title: "", details: "" }, { src: "Images/a12.jpg", title: "", details: "" },
+                    { src: "Images/a13.jpg", title: "", details: "" }, { src: "Images/a14.jpg", title: "", details: "" },
+                    { src: "Images/a15.jpg", title: "", details: "" }, { src: "Images/a16.jpg", title: "", details: "" },
+                ]
+            },
+            'insects-photo': {
+                title: "Insect Photography",
+                images: [
+                    { src: "Images/i1.jpg", title: "", details: "" }, { src: "Images/i2.jpg", title: "", details: "" },
+                    { src: "Images/i3.jpg", title: "", details: "" }, { src: "Images/i4.jpg", title: "", details: "" },
+                    { src: "Images/i5.jpg", title: "", details: "" }, { src: "Images/i6.jpg", title: "", details: "" },
+                    { src: "Images/i7.jpg", title: "", details: "" }, { src: "Images/i8.jpg", title: "", details: "" },
+                    { src: "Images/i9.jpg", title: "", details: "" }, { src: "Images/i10.jpg", title: "", details: "" },
+                    { src: "Images/i11.jpg", title: "", details: "" }, { src: "Images/i12.jpg", title: "", details: "" },
+                    { src: "Images/i13.jpg", title: "", details: "" }, { src: "Images/i14.jpg", title: "", details: "" },
+                    { src: "Images/i15.jpg", title: "", details: "" }, { src: "Images/i16.jpg", title: "", details: "" },
+                    { src: "Images/i17.jpg", title: "", details: "" }, { src: "Images/i18.jpg", title: "", details: "" },
+                    { src: "Images/i19.jpg", title: "", details: "" }, { src: "Images/i20.jpg", title: "", details: "" },
+                ]
+            },
+            'birds-photo': {
+                title: "Bird Photography",
+                images: [
+                    { src: "Images/b1.jpg", title: "", details: "" }, { src: "Images/b2.jpg", title: "", details: "" },
+                    { src: "Images/b3.jpg", title: "", details: "" }, { src: "Images/b4.jpg", title: "", details: "" },
+                    { src: "Images/b5.jpg", title: "", details: "" }, { src: "Images/b6.jpg", title: "", details: "" },
+                    { src: "Images/b7.jpg", title: "", details: "" }, { src: "Images/b8.jpg", title: "", details: "" },
+                    { src: "Images/b9.jpg", title: "", details: "" }, { src: "Images/b10.jpg", title: "", details: "" },
+                    { src: "Images/b11.jpg", title: "", details: "" }, { src: "Images/b12.jpg", title: "", details: "" },
+                    { src: "Images/b13.jpg", title: "", details: "" }, { src: "Images/b14.jpg", title: "", details: "" },
+                    { src: "Images/b15.jpg", title: "", details: "" }, { src: "Images/b16.jpg", title: "", details: "" },
+                    { src: "Images/b17.jpg", title: "", details: "" }, { src: "Images/b18.jpg", title: "", details: "" },
+                    { src: "Images/b19.jpg", title: "", details: "" }, { src: "Images/b20.jpg", title: "", details: "" },
+                ]
+            },
+            'reptiles-photo': {
+                title: "Reptile Photography",
+                images: [
+                    { src: "Images/r1.jpg", title: "", details: "" }, { src: "Images/r2.jpg", title: "", details: "" },
+                    { src: "Images/r3.jpg", title: "", details: "" }, { src: "Images/r4.jpg", title: "", details: "" },
+                    { src: "Images/r5.jpg", title: "", details: "" }, { src: "Images/r6.jpg", title: "", details: "" },
+                    { src: "Images/r7.jpg", title: "", details: "" }, { src: "Images/r8.jpg", title: "", details: "" },
+                    { src: "Images/r9.jpg", title: "", details: "" }, { src: "Images/r10.jpg", title: "", details: "" },
+                    { src: "Images/r11.jpg", title: "", details: "" }, { src: "Images/r12.jpg", title: "", details: "" },
+                    { src: "Images/r13.jpg", title: "", details: "" }, { src: "Images/r14.jpg", title: "", details: "" },
+                    { src: "Images/r15.jpg", title: "", details: "" }, { src: "Images/r16.jpg", title: "", details: "" },
+                    { src: "Images/r17.jpg", title: "", details: "" }, { src: "Images/r18.jpg", title: "", details: "" },
+                    { src: "Images/r19.jpg", title: "", details: "" }, { src: "Images/r20.jpg", title: "", details: "" },
+                ]
+            },
+            'exhibition-photos': {
+                title: "Exhibition Pictures",
+                images: [
+                    { src: "Images/e1.jpg", title: "", details: "" }, { src: "Images/e2.jpg", title: "", details: "" },
+                    { src: "Images/e3.jpg", title: "", details: "" }, { src: "Images/e4.jpg", title: "", details: "" },
+                    { src: "Images/e5.jpg", title: "", details: "" }, { src: "Images/e6.jpg", title: "", details: "" },
+                    { src: "Images/e7.jpg", title: "", details: "" }, { src: "Images/e8.jpg", title: "", details: "" },
+                    { src: "Images/e9.jpg", title: "", details: "" }, { src: "Images/e10.jpg", title: "", details: "" },
+                ]
+            }
+        };
+
+        function updateGallery(category) {
+            const data = galleryData[category];
+            if (!data) return;
+
+            galleryHeading.textContent = data.title;
+            artGrid.innerHTML = ''; // Clear previous content
+
+            data.images.forEach(image => {
+                const artItem = document.createElement('div');
+                artItem.className = 'art-item';
+                artItem.innerHTML = `
+            <img src="${image.src}" alt="${image.title || 'Artwork'}">
+            <div class="art-overlay">
+                <span class="art-title">${image.title}</span>
+                <span class="art-details">${image.details}</span>
+            </div>
+        `;
+                artGrid.appendChild(artItem);
+            });
+        }
+
+        // Event delegation for opening full view
+        artGrid.addEventListener('click', (e) => {
+            const img = e.target.closest('img');
+            if (!img) return;
+            fullview.style.display = 'flex';
+            fullview_img.src = img.src;
+            fullview_img.alt = img.alt || '';
+        });
+
+        // Close button
+        close_fullview.addEventListener('click', () => {
+            fullview.style.display = 'none';
+            fullview_img.src = '';
+        });
+
+        // Gallery menu links
+        galleryLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const category = link.dataset.category;
+                updateGallery(category);
+                document.querySelector('#gallery').scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+
+        // Initialize gallery
+        updateGallery('figurative');
+
+        // Carousel
+        const carouselLinks = document.querySelectorAll('#carousel-images a'); // Using your ID
+        const carouselFullview = document.getElementById('carousel-fullview');
+        const carouselImg = document.getElementById('carousel-img');
+        const carouselClose = document.getElementById('carousel-close');
+
+        carouselLinks.forEach(link => {
+            link.addEventListener('click', e => {
+                e.preventDefault(); // Prevent opening in a new tab
+                const imgSrc = link.getAttribute('href');
+                const imgAlt = link.querySelector('img').alt || '';
+
+                carouselImg.src = imgSrc;
+                carouselImg.alt = imgAlt;
+                carouselFullview.style.display = 'flex';
+            });
+        });
+
+        // Close button
+        carouselClose.addEventListener('click', () => {
+            carouselFullview.style.display = 'none';
+            carouselImg.src = '';
+        });
+
+
+
+
+    </script>
+    </div>
+
+</body>
+
+</html>
