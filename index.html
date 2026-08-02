@@ -5,18 +5,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pooja Palsambkar - Fine Artist</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         :root {
-            --primary-color: #4A69BD;
-            --secondary-color: #78909c;
-            --text-color: #2c3e50;
-            --bg-color: #f8f8f0;
-            --shadow-light: 0 4px 15px rgba(0, 0, 0, 0.05);
-            --shadow-strong: 0 10px 30px rgba(0, 0, 0, 0.15);
+            --ink: #14110d;
+            --ink-soft: #4d463c;
+            --muted: #8c8272;
+            --paper: #f6f1e4;
+            --paper-deep: #ece3cd;
+            --line: #ded1ab;
+            --accent: #a97b32;
+            --accent-soft: #c99b52;
+            --white: #fffdf6;
+            --on-dark: #efe6d2;
+            --on-dark-muted: #a89b83;
+            --shadow-soft: 0 10px 30px -12px rgba(20, 17, 13, 0.22);
+            --shadow-lift: 0 22px 45px -18px rgba(20, 17, 13, 0.35);
         }
 
         * {
@@ -25,453 +34,750 @@
             box-sizing: border-box;
         }
 
-        body {
-            font-family: 'Poppins', sans-serif;
-            line-height: 1.6;
-            color: var(--text-color);
-            background-color: var(--bg-color);
-            background: linear-gradient(to bottom, #fafafa, #f5f5f5);
-            overflow-x: hidden;
-            transition: background 0.5s ease;
+        html {
+            scroll-padding-top: 90px;
         }
 
-        /* Header and Navigation */
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.7;
+            color: var(--ink-soft);
+            background-color: var(--paper);
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, .display {
+            font-family: 'Fraunces', serif;
+            color: var(--ink);
+        }
+
+        ::selection {
+            background: var(--accent);
+            color: var(--white);
+        }
+
+        a {
+            color: inherit;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.001ms !important;
+                transition-duration: 0.001ms !important;
+            }
+        }
+
+        /* ---------- Header ---------- */
         header {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
+            background: rgba(20, 17, 13, 0.82);
+            backdrop-filter: blur(14px);
             z-index: 1000;
-            padding: 1.25rem 2rem;
-            transition: all 0.3s ease;
-            box-shadow: none;
+            padding: 1.4rem 1.75rem;
+            transition: box-shadow 0.35s ease;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            border-bottom: 1px solid transparent;
+        }
+
+        @media (min-width: 768px) {
+            header {
+                padding: 1.6rem 3rem;
+            }
         }
 
         header .logo {
-            font-family: 'Playfair Display', serif;
-            font-weight: 700;
-            font-size: 1.75rem;
-            color: var(--primary-color);
+            display: flex;
+            flex-direction: column;
+            line-height: 1.15;
             text-decoration: none;
-            letter-spacing: -0.5px;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.05);
         }
 
-        /* Nav styling for the sliding menu */
+        header .logo .logo-name {
+            font-family: 'Fraunces', serif;
+            font-style: italic;
+            font-weight: 500;
+            font-size: 1.4rem;
+            color: var(--on-dark);
+            letter-spacing: 0.01em;
+        }
+
+        header .logo .logo-tag {
+            margin-top: 0.15rem;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.62rem;
+            font-weight: 600;
+            letter-spacing: 0.24em;
+            text-transform: uppercase;
+            color: var(--accent);
+        }
+
+        .hamburger {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 0.5rem;
+            z-index: 3000;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 26px;
+            height: 1.5px;
+            background: var(--on-dark);
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+
+        .hamburger.is-hidden {
+            opacity: 0;
+            pointer-events: none;
+            transform: scale(0.85);
+        }
+
+        /* ---------- Nav Overlay ---------- */
         header nav {
             position: fixed;
             top: 0;
             right: 0;
-            width: 80%;
-            max-width: 300px;
+            width: 100%;
             height: 100vh;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+            background: var(--ink);
             transform: translateX(100%);
-            transition: transform 0.3s ease-in-out;
+            transition: transform 0.45s cubic-bezier(0.65, 0, 0.35, 1);
             z-index: 2000;
-            padding: 2rem;
-            padding-top: 5rem;
+            padding: 2rem 1.75rem;
             display: flex;
             flex-direction: column;
             align-items: flex-start;
             overflow-y: auto;
         }
 
+        @media (min-width: 768px) {
+            header nav {
+                padding: 3rem 5rem;
+                align-items: center;
+            }
+        }
+
         header nav.is-open {
             transform: translateX(0);
         }
 
-        /* Close button inside the menu */
         #close-btn {
             position: absolute;
-            top: 1.5rem;
-            right: 1.5rem;
-            font-size: 2rem;
+            top: 1.6rem;
+            right: 1.75rem;
+            font-size: 1.8rem;
+            line-height: 1;
             cursor: pointer;
-            color: var(--primary-color);
+            color: var(--on-dark);
+            background: none;
+            border: none;
         }
 
-        header nav ul {
-            display: flex;
-            flex-direction: column;
+        @media (min-width: 768px) {
+            #close-btn {
+                right: 3rem;
+            }
+        }
+
+        header nav > ul {
             list-style: none;
-            font-weight: 500;
             width: 100%;
+            max-width: 560px;
+            margin-top: 3.5rem;
         }
 
-        header nav ul#gallery-submenu {
-            list-style: none;
+        header nav > ul > li {
+            width: 100%;
+            border-bottom: 1px solid rgba(239, 230, 210, 0.14);
         }
 
+        header nav > ul > li:first-child {
+            border-top: 1px solid rgba(239, 230, 210, 0.14);
+        }
+
+        header nav ul li a,
+        header nav ul li span.nav-link {
+            text-decoration: none;
+            display: block;
+            padding: 1.1rem 0.15rem;
+            font-family: 'Fraunces', serif;
+            font-size: 1.5rem;
+            font-weight: 500;
+            color: var(--on-dark);
+            transition: color 0.25s ease, padding-left 0.25s ease;
+        }
+
+        header nav ul li a:hover,
+        header nav ul li a.active,
+        header nav ul li span.nav-link:hover {
+            color: var(--accent-soft);
+            padding-left: 0.6rem;
+        }
+
+        header nav ul#about-submenu,
+        header nav ul#gallery-submenu,
         header nav ul#photography-submenu {
             list-style: none;
         }
 
-        header nav ul li {
-            margin: 0.5rem 0;
-            width: 100%;
+        header nav ul#gallery-submenu > li {
+            border: none;
         }
 
-        header nav ul li a {
-            color: #555;
-            text-decoration: none;
-            position: relative;
-            transition: color 0.3s ease;
-            display: block;
-            padding: 0.5rem;
+        header nav ul#about-submenu li a,
+        header nav ul#gallery-submenu li a,
+        header nav ul#photography-submenu li a {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 500;
+            letter-spacing: 0.02em;
+            color: var(--on-dark-muted);
+            padding: 0.55rem 0.15rem;
+            text-transform: none;
         }
 
-        header nav ul li a::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background-color: var(--primary-color);
-            transition: width 0.3s ease-in-out;
+        header nav ul#about-submenu li a:hover,
+        header nav ul#gallery-submenu li a:hover,
+        header nav ul#photography-submenu li a:hover {
+            color: var(--accent-soft);
+            padding-left: 0.6rem;
         }
 
-        header nav ul li a:hover,
-        header nav ul li a.active {
-            color: var(--primary-color);
+        header nav ul li ul {
+            padding-left: 0.9rem;
+            margin-top: 0.25rem;
+            margin-bottom: 0.6rem;
+            border-left: 1px solid rgba(239, 230, 210, 0.14);
         }
 
-        header nav ul li a:hover::after,
-        header nav ul li a.active::after {
-            width: 100%;
-        }
-
-        .hamburger {
-            display: block;
-            font-size: 2rem;
-            cursor: pointer;
-            color: var(--primary-color);
+        .chevron-icon {
             transition: transform 0.3s ease;
-            z-index: 3000;
+            color: var(--on-dark-muted);
         }
 
-        /* Hero Section */
+        .rotate-180 {
+            transform: rotate(180deg);
+        }
+
+        /* ---------- Hero ---------- */
         .hero {
-            height: 100vh;
+            min-height: 100vh;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
-            flex-direction: column;
             text-align: center;
-            background: url('https://images.unsplash.com/photo-1549497525-4c0175b28d05?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') no-repeat center center/cover;
+            padding: 2rem 1.5rem;
+            background: radial-gradient(ellipse at 50% 0%, #1e1911 0%, var(--ink) 65%);
             position: relative;
         }
 
-        .hero::before {
+        .hero-content h1 {
+            font-size: clamp(2.75rem, 8vw, 5.75rem);
+            font-weight: 600;
+            letter-spacing: -0.01em;
+            line-height: 1.02;
+            color: var(--on-dark);
+        }
+
+        .hero-content .hero-sub {
+            margin-top: 0.9rem;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.78rem;
+            font-weight: 600;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: var(--accent-soft);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.9rem;
+        }
+
+        .hero-content .hero-sub::before,
+        .hero-content .hero-sub::after {
             content: '';
+            width: 28px;
+            height: 1px;
+            background: var(--accent-soft);
+            opacity: 0.6;
+        }
+
+        /* Image Carousel / "framed" artwork */
+        .image-carousel {
+            position: relative;
+            width: min(90vw, 460px);
+            aspect-ratio: 4 / 3;
+            margin: 3rem auto 0 auto;
+            background: var(--white);
+            padding: 0.55rem;
+            border: 1px solid rgba(201, 155, 82, 0.4);
+            border-radius: 2px;
+            box-shadow: 0 25px 60px -20px rgba(0, 0, 0, 0.6);
+            overflow: hidden;
+        }
+
+        .carousel-images {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .carousel-images a {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(245, 245, 245, 0.6);
-            backdrop-filter: blur(2px);
-            z-index: 1;
+            display: block;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s ease;
         }
 
-        .hero-content {
-            z-index: 2;
-            padding: 2rem;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+        .carousel-images a.active {
+            opacity: 1;
+            visibility: visible;
         }
 
-        .hero-content h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: 4.5rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-            color: #333;
-            letter-spacing: -1px;
-            animation: slideUp 1s ease-out;
-        }
-
-        .hero-content p {
-            font-size: 1.5rem;
-            color: #555;
-            animation: slideUp 1.2s ease-out;
-        }
-
-        /* Image Carousel Styling */
-        .image-carousel {
-            position: relative;
-            width: 80%;
-            max-width: 500px;
-            aspect-ratio: 4 / 3;
-            border: 4px solid #fff;
-            border-radius: 1rem;
-            box-shadow: var(--shadow-strong);
-            overflow: hidden;
-            margin-top: 2rem;
-        }
-
-        .carousel-images {
-            display: flex;
+        .carousel-images a img {
             width: 100%;
             height: 100%;
-            transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-        }
-
-        .carousel-images a {
-            min-width: 100%;
-            height: 100%;
-            object-fit: cover;
+            object-fit: contain;
+            background: var(--white);
         }
 
         .carousel-btn {
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
-            background: rgba(0, 0, 0, 0.4);
-            color: white;
-            border: none;
-            padding: 0.5rem;
+            background: rgba(250, 247, 240, 0.85);
+            color: var(--ink);
+            border: 1px solid var(--line);
+            width: 42px;
+            height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             cursor: pointer;
             border-radius: 50%;
-            transition: background 0.3s ease;
+            transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease;
             z-index: 10;
         }
 
         .carousel-btn:hover {
-            background: rgba(0, 0, 0, 0.6);
+            background: var(--accent);
+            color: var(--white);
+            border-color: var(--accent);
         }
 
         #prev-btn {
-            left: 1rem;
+            left: 0.9rem;
         }
 
         #next-btn {
-            right: 1rem;
+            right: 0.9rem;
         }
 
-        /* General Section Styling */
+        /* ---------- General Section ---------- */
         .section {
-            padding: 6rem 2rem;
-            max-width: 1200px;
+            padding: 6.5rem 1.5rem;
+            max-width: 1180px;
             margin: 0 auto;
-            text-align: center;
         }
 
-        .section h2 {
-            font-family: 'Playfair Display', serif;
-            font-size: 3rem;
+        .section-head {
+            text-align: center;
+            margin-bottom: 3.5rem;
+        }
+
+        .section-head h2 {
+            font-size: clamp(2.1rem, 4.5vw, 2.85rem);
             font-weight: 600;
-            margin-bottom: 3rem;
-            color: #333;
             position: relative;
             display: inline-block;
         }
 
-        /* About Section */
-        #about .about-content {
+        .section-head .rule {
+            width: 46px;
+            height: 2px;
+            background: var(--accent);
+            margin: 1rem auto 0;
+        }
+
+        /* ---------- About ---------- */
+        #about {
+            background: var(--paper);
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2.75rem;
+            align-items: start;
+        }
+
+        @media (min-width: 900px) {
+            .about-grid {
+                grid-template-columns: 300px 1fr;
+                gap: 4.5rem;
+            }
+        }
+
+        .about-portrait {
             display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 2rem;
+            justify-content: center;
         }
 
-        #about .profile-image {
-            width: 250px;
-            height: 250px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 5px solid #fff;
-            box-shadow: var(--shadow-strong);
-            transition: transform 0.3s ease;
+        .about-portrait .frame {
+            padding: 0.5rem;
+            background: var(--white);
+            border: 1px solid var(--line);
+            box-shadow: var(--shadow-soft);
         }
 
-        #about .profile-image:hover {
-            transform: scale(1.05);
+        .about-portrait img {
+            width: 260px;
+            height: 320px;
+            object-fit: contain;
+            display: block;
         }
 
-        #about .about-text {
-            max-width: 800px;
-            text-align: justify;
-            font-size: 1.125rem;
-            color: #444;
+        @media (min-width: 900px) {
+            .about-portrait img {
+                width: 100%;
+                height: 380px;
+            }
         }
 
-        #about .list-container {
-            max-width: 800px;
-            margin: 0 auto;
+        .about-text p {
+            margin-bottom: 1.15rem;
+            font-size: 1.03rem;
+            color: var(--ink-soft);
             text-align: left;
-            margin-top: 2rem;
         }
 
-        #about .list-container h3 {
-            text-align: center;
-            font-size: 1.75rem;
+        .about-text p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Info grid: qualification / awards / exhibition */
+        .info-grid {
+            margin-top: 4.5rem;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2.75rem;
+        }
+
+        @media (min-width: 900px) {
+            .info-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 0;
+            }
+
+            .info-grid .info-block {
+                padding: 0 2.25rem;
+                border-left: 1px solid var(--line);
+            }
+
+            .info-grid .info-block:first-child {
+                padding-left: 0;
+                border-left: none;
+            }
+        }
+
+        .info-block h3 {
+            font-size: 1.05rem;
             font-weight: 600;
-            margin-bottom: 1rem;
-            color: #333;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            margin-bottom: 1.1rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid var(--line);
         }
 
-        #about .list-container ul {
-            list-style-type: disc;
-            padding-left: 1.5rem;
-            font-size: 1.125rem;
-            color: #444;
+        .info-block ul {
+            list-style: none;
         }
 
-        #about .list-container ul li {
-            margin-bottom: 0.5rem;
+        .info-block ul li {
+            position: relative;
+            padding-left: 1.1rem;
+            margin-bottom: 0.7rem;
+            font-size: 0.94rem;
+            color: var(--ink-soft);
         }
 
-        /* Gallery Section */
+        .info-block ul li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.55em;
+            width: 6px;
+            height: 1px;
+            background: var(--accent);
+        }
+
+        /* ---------- Gallery ---------- */
         #gallery {
-            background-color: #f0f0f5;
+            background: var(--paper-deep);
+        }
+
+        .gallery-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+            justify-content: center;
+            margin-bottom: 3rem;
+        }
+
+        .gallery-tabs .tab-divider {
+            width: 100%;
+            text-align: center;
+            font-size: 0.65rem;
+            font-weight: 600;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin: 0.75rem 0 0.15rem;
+        }
+
+        .tab-link {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.82rem;
+            font-weight: 500;
+            padding: 0.55rem 1.15rem;
+            border: 1px solid var(--line);
+            border-radius: 999px;
+            color: var(--ink-soft);
+            text-decoration: none;
+            background: var(--white);
+            transition: all 0.25s ease;
+            cursor: pointer;
+        }
+
+        .tab-link:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .tab-link.active {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: var(--white);
         }
 
         .art-grid {
             display: grid;
             gap: 1.5rem;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            margin-top: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
         }
 
         .art-item {
             position: relative;
             overflow: hidden;
-            border-radius: 0.75rem;
-            box-shadow: var(--shadow-light);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid var(--line);
+            background: var(--white);
+            aspect-ratio: 1 / 1;
+            box-shadow: var(--shadow-soft);
+            transition: transform 0.35s ease, box-shadow 0.35s ease;
             cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.4rem;
         }
 
         .art-item:hover {
-            transform: translateY(-10px);
-            box-shadow: var(--shadow-strong);
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-lift);
         }
 
         .art-item img {
             width: 100%;
             height: 100%;
-            object-fit: cover;
-            transition: transform 0.3s ease;
+            object-fit: contain;
+            transition: transform 0.5s ease;
+            display: block;
         }
 
         .art-item:hover img {
-            transform: scale(1.05);
+            transform: scale(1.04);
         }
 
-        /* .art-overlay {
+        .art-overlay {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.6);
-            color: white;
+            inset: 0;
             display: flex;
             flex-direction: column;
-            justify-content: center;
-            align-items: center;
+            justify-content: flex-end;
+            padding: 0.9rem;
             opacity: 0;
             transition: opacity 0.3s ease;
-        } */
-
-        .art-item:hover .art-overlay {
-            opacity: 1;
+            color: var(--white);
+            pointer-events: none;
         }
 
         .art-title {
-            font-size: 1.25rem;
-            font-weight: 600;
+            font-family: 'Fraunces', serif;
+            font-size: 1.05rem;
+            font-weight: 500;
         }
 
         .art-details {
-            font-size: 0.875rem;
-            color: #d1d5db;
+            font-size: 0.8rem;
+            color: #e7ddcc;
         }
 
-        /* Contact Section Specific Styles */
-        #contact .contact-content {
+        /* ---------- Contact ---------- */
+        #contact {
+            background: var(--paper);
+        }
+
+        .contact-name {
+            text-align: center;
+            font-family: 'Fraunces', serif;
+            font-style: italic;
+            font-size: 1.2rem;
+            color: var(--ink-soft);
+            margin-bottom: 2.5rem;
+        }
+
+        .contact-content {
             display: flex;
             flex-direction: column;
-            gap: 1rem;
+            gap: 1.25rem;
             align-items: center;
         }
 
-        #contact .contact-item {
+        @media (min-width: 768px) {
+            .contact-content {
+                flex-direction: row;
+                justify-content: center;
+                gap: 3rem;
+            }
+        }
+
+        .contact-item {
             display: flex;
             align-items: center;
-            font-size: 1.125rem;
-            color: #444;
-            gap: 0.5rem;
+            gap: 0.75rem;
+            font-size: 1rem;
+            color: var(--ink-soft);
         }
 
-        #contact .contact-item .contact-link {
+        .contact-item .icon-wrap {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--paper-deep);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent);
+            flex-shrink: 0;
+        }
+
+        .contact-item strong {
+            font-weight: 600;
+            color: var(--ink);
+        }
+
+        .contact-link {
             text-decoration: none;
-            color: #444;
-            transition: color 0.2s ease, transform 0.2s ease;
+            color: var(--ink-soft);
+            border-bottom: 1px solid transparent;
+            transition: color 0.25s ease, border-color 0.25s ease;
         }
 
-        #contact .contact-item .contact-link:hover {
-            color: var(--primary-color);
-            transform: translateY(-2px);
+        .contact-link:hover {
+            color: var(--accent);
+            border-color: var(--accent);
         }
 
-        #contact .contact-item svg {
-            color: var(--primary-color);
+        /* ---------- Fullview / Lightbox overlays ---------- */
+        #fullview, #carousel-fullview {
+            background: rgba(20, 17, 14, 0.94) !important;
         }
 
-        /* === NEW: LIGHTBOX STYLES === */
-        .lightbox {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            padding-top: 60px;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.9);
-            overflow: auto;
+        #close_fullview, #carousel-close {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            border: 1px solid rgba(255, 255, 255, 0.35) !important;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px !important;
+            transition: background 0.25s ease, border-color 0.25s ease;
+            z-index: 2;
         }
 
-        .lightbox-content {
-            margin: auto;
-            display: block;
-            max-width: 90%;
-            max-height: 80%;
+        #close_fullview:hover, #carousel-close:hover {
+            background: rgba(255, 255, 255, 0.12);
+            border-color: rgba(255, 255, 255, 0.7) !important;
         }
 
-        #caption {
-            margin: auto;
-            display: block;
-            width: 80%;
-            text-align: center;
-            color: #fff;
-            padding: 10px 0;
-        }
-
-        .close {
+        .fullview-nav {
             position: absolute;
-            top: 20px;
-            right: 35px;
-            color: #fff;
-            font-size: 40px;
-            font-weight: bold;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.06);
+            color: var(--on-dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
             cursor: pointer;
-            z-index: 1001;
+            transition: background 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
+            z-index: 2;
         }
 
-        .close:hover {
-            color: #bbb;
+        .fullview-nav:hover {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: var(--ink);
+        }
+
+        .fullview-nav--prev {
+            left: 1rem;
+        }
+
+        .fullview-nav--next {
+            right: 1rem;
+        }
+
+        @media (min-width: 768px) {
+            .fullview-nav--prev {
+                left: 2.5rem;
+            }
+
+            .fullview-nav--next {
+                right: 2.5rem;
+            }
+        }
+
+        .fullview-counter {
+            position: absolute;
+            bottom: 1.75rem;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.78rem;
+            letter-spacing: 0.15em;
+            color: var(--on-dark-muted);
         }
     </style>
 </head>
@@ -479,21 +785,19 @@
 <body>
 
     <header>
-        <a href="#hero" class="logo">Pooja Palsambkar</a>
+        <a href="#hero" class="logo">
+            <span class="logo-name">Pooja Palsambkar</span>
+            <span class="logo-tag">Fine Artist</span>
+        </a>
         <button id="hamburger-btn" class="hamburger focus:outline-none" aria-label="Toggle navigation">
-            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
-                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                class="lucide lucide-menu">
-                <line x1="4" x2="20" y1="12" y2="12" />
-                <line x1="4" x2="20" y1="6" y2="6" />
-                <line x1="4" x2="20" y1="18" y2="18" />
-            </svg>
+            <span></span>
+            <span></span>
+            <span></span>
         </button>
         <nav id="main-nav">
             <button id="close-btn" class="focus:outline-none" aria-label="Close navigation">
-                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                    class="lucide lucide-x">
+                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M18 6 6 18" />
                     <path d="m6 6 12 12" />
                 </svg>
@@ -502,12 +806,10 @@
                 <li><a href="#hero" class="nav-link active">Home</a></li>
                 <li class="relative">
                     <div class="flex items-center justify-between">
-                        <a href="#" id="about-toggle"
-                            class="nav-link font-medium text-gray-500 hover:text-gray-700 transition-colors">About
-                            Me</a>
+                        <a href="#" id="about-toggle" class="nav-link">About Me</a>
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                            class="lucide lucide-chevron-down ml-2 transition-transform duration-300 transform-gpu">
+                            class="chevron-icon">
                             <polyline points="6 9 12 15 18 9" />
                         </svg>
                     </div>
@@ -522,8 +824,7 @@
                 </li>
                 <li>
                     <div class="flex items-center justify-between">
-                        <a href="#gallery" id="gallery-toggle"
-                            class="nav-link font-medium text-gray-500 hover:text-gray-700 transition-colors">Gallery</a>
+                        <a href="#gallery" id="gallery-toggle" class="nav-link">Gallery</a>
                     </div>
                     <ul id="gallery-submenu" class="flex flex-col list-none pl-4 mt-2">
                         <li><a href="#gallery" class="gallery-link nav-link block w-full text-left"
@@ -536,16 +837,14 @@
                                 data-category="landscape">Landscape</a></li>
                         <li class="relative">
                             <div class="flex items-center justify-between">
-                                <span id="photography-toggle"
-                                    class="nav-link font-medium text-gray-500 cursor-pointer">Photography</span>
+                                <span id="photography-toggle" class="nav-link cursor-pointer">Photography</span>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    class="lucide lucide-chevron-down ml-2 transition-transform duration-300 transform-gpu">
+                                    stroke-linejoin="round" class="chevron-icon">
                                     <polyline points="6 9 12 15 18 9" />
                                 </svg>
                             </div>
-                            <ul id="photography-submenu" class="hidden flex-col list-disc pl-4 mt-2">
+                            <ul id="photography-submenu" class="hidden flex-col list-none pl-4 mt-2">
                                 <li><a href="#gallery" class="gallery-link nav-link block w-full text-left"
                                         data-category="nature-photo">Nature</a></li>
                                 <li><a href="#gallery" class="gallery-link nav-link block w-full text-left"
@@ -571,7 +870,7 @@
         <section id="hero" class="hero">
             <div class="hero-content">
                 <h1>Pooja Palsambkar</h1>
-                <p>Fine Artist</p>
+                <p class="hero-sub">Fine Artist</p>
                 <div class="image-carousel">
                     <div id="carousel-images" class="carousel-images">
                         <a href="Images/c3.jpg">
@@ -580,7 +879,7 @@
                         <a href="Images/c2.jpg">
                             <img src="Images/c2.jpg" alt="Art piece titled 'Friends'">
                         </a>
-                        <a href="Images/C1.jpg">
+                        <a href="Images2/c7.jpeg">
                             <img src="Images2/c7.jpeg" alt="Art piece titled 'Still life'">
                         </a>
                         <a href="Images/c4.jpg">
@@ -594,16 +893,14 @@
                         </a>
                     </div>
                     <button id="prev-btn" class="carousel-btn" aria-label="Previous image">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                            class="lucide lucide-chevron-left">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="m15 18-6-6 6-6" />
                         </svg>
                     </button>
                     <button id="next-btn" class="carousel-btn" aria-label="Next image">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                            class="lucide lucide-chevron-right">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="m9 18 6-6-6-6" />
                         </svg>
                     </button>
@@ -612,9 +909,16 @@
         </section>
 
         <section id="about" class="section">
-            <h2>About Me</h2>
-            <div class="about-content">
-                <img src="Images/pfp.jpg" alt="Pooja Palsambkar's profile picture" class="profile-image mb-8">
+            <div class="section-head">
+                <h2>About Me</h2>
+                <div class="rule"></div>
+            </div>
+            <div class="about-grid">
+                <div class="about-portrait">
+                    <div class="frame">
+                        <img src="Images/pfp.jpg" alt="Pooja Palsambkar's profile picture">
+                    </div>
+                </div>
                 <div id="profile" class="about-text">
                     <p>I, Pooja Ashok Palsambkar, was born in 1997, at Villeparle - Mumbai - Maharashtra, India. From
                         childhood I have always been fascinated by drawing and painting. After finishing schooling, my
@@ -644,110 +948,153 @@
                         am still working on the same subject to emphasize the different perspectives of Human beings.
                     </p>
                 </div>
+            </div>
 
-                <div id="qualification" class="list-container">
-                    <h3>QUALIFICATION</h3>
+            <div class="info-grid">
+                <div id="qualification" class="info-block">
+                    <h3>Qualification</h3>
                     <ul>
                         <li>2021 - Masters of Visual Arts - Portraiture</li>
                         <li>2019 - Bachelor of Visual Arts</li>
                     </ul>
                 </div>
 
-                <div class="flex flex-col md:flex-row md:space-x-24 w-full max-w-4xl">
-                    <div id="awards" class="list-container md:flex-1">
-                        <h3>AWARDS & ACHIEVEMENTS</h3>
-                        <ul>
-                            <li>2024 - Maharashtra State Art Award</li>
-                            <li>2024 - Bombay Art Society Award</li>
-                            <li>2023 - CCRT Young Artist Scholarship</li>
-                            <li>2022 - Varnika Art Society Award, Karnataka</li>
-                            <li>2022 - Art Plaza Merit</li>
-                            <li>2022 - International Fiesta Art Merit, Delhi</li>
-                            <li>2021 - Bombay Art Society</li>
-                            <li>2020 - Kalavarat National Art Merit, Ujjain</li>
-                        </ul>
-                    </div>
-
-                    <div id="exhibition" class="list-container mt-8 md:mt-0 md:flex-1">
-                        <h3>EXHIBITION</h3>
-                        <ul>
-                            <li>2023, 2022, 2021 - The Art Society of India, Mumbai</li>
-                            <li>2023 - Maharashtra State Art, Mumbai</li>
-                            <li>2023, 2022 - Indian Academy of Fine Arts, Amritsar</li>
-                            <li>2019 - Monsoon Art Show, Mumbai</li>
-                        </ul>
-                    </div>
+                <div id="awards" class="info-block">
+                    <h3>Awards & Achievements</h3>
+                    <ul>
+                        <li>2024 - Maharashtra State Art Award</li>
+                        <li>2024 - Bombay Art Society Award</li>
+                        <li>2023 - CCRT Young Artist Scholarship</li>
+                        <li>2022 - Varnika Art Society Award, Karnataka</li>
+                        <li>2022 - Art Plaza Merit</li>
+                        <li>2022 - International Fiesta Art Merit, Delhi</li>
+                        <li>2021 - Bombay Art Society</li>
+                        <li>2020 - Kalavarat National Art Merit, Ujjain</li>
+                    </ul>
                 </div>
 
+                <div id="exhibition" class="info-block">
+                    <h3>Exhibition</h3>
+                    <ul>
+                        <li>2026, 2023, 2022, 2021 - The Art Society of India, Mumbai</li>
+                        <li>2026, 2023 - Maharashtra State Art, Mumbai</li>
+                        <li>2023, 2022 - Indian Academy of Fine Arts, Amritsar</li>
+                        <li>2019 - Monsoon Art Show, Mumbai</li>
+                    </ul>
+                </div>
             </div>
         </section>
 
         <section id="gallery" class="section">
-            <h2 id="gallery-heading">Gallery</h2>
+            <div class="section-head">
+                <h2 id="gallery-heading">Gallery</h2>
+                <div class="rule"></div>
+            </div>
+
+            <div class="gallery-tabs" id="gallery-tabs">
+                <a href="#gallery" class="gallery-link tab-link" data-category="figurative">Figurative works</a>
+                <a href="#gallery" class="gallery-link tab-link" data-category="portraits">Portraits</a>
+                <a href="#gallery" class="gallery-link tab-link" data-category="subjective">Subjective</a>
+                <a href="#gallery" class="gallery-link tab-link" data-category="landscape">Landscape</a>
+                <a href="#gallery" class="gallery-link tab-link" data-category="exhibition-photos">Exhibition Pictures</a>
+                <div class="tab-divider">Photography</div>
+                <a href="#gallery" class="gallery-link tab-link" data-category="nature-photo">Nature</a>
+                <a href="#gallery" class="gallery-link tab-link" data-category="landscapes-photo">Landscapes</a>
+                <a href="#gallery" class="gallery-link tab-link" data-category="cats-photo">Cats</a>
+                <a href="#gallery" class="gallery-link tab-link" data-category="insects-photo">Insects</a>
+                <a href="#gallery" class="gallery-link tab-link" data-category="birds-photo">Birds</a>
+                <a href="#gallery" class="gallery-link tab-link" data-category="reptiles-photo">Reptiles</a>
+            </div>
+
             <div id="art-grid" class="art-grid">
             </div>
         </section>
 
         <section id="contact" class="section">
-            <h2>Contact Me</h2>
-            <p class="text-xl mb-4 text-center text-gray-700">Pooja Palsambkar</p>
-            <div
-                class="contact-content md:flex md:flex-row md:justify-center md:items-center md:space-x-8 space-y-4 md:space-y-0">
+            <div class="section-head">
+                <h2>Contact Me</h2>
+                <div class="rule"></div>
+            </div>
+            <p class="contact-name">Pooja Palsambkar</p>
+            <div class="contact-content">
                 <div class="contact-item">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                        class="lucide lucide-phone-call mr-2">
-                        <path
-                            d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-3.37-2.94A19.5 19.5 0 0 1 2.24 8.63 2 2 0 0 1 4.42 6.5h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
-                    </svg>
-                    <strong>Mobile:</strong>
-                    <a href="tel:+917045084197" class="contact-link">+91 7045084197</a>
+                    <span class="icon-wrap">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path
+                                d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-3.37-2.94A19.5 19.5 0 0 1 2.24 8.63 2 2 0 0 1 4.42 6.5h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+                        </svg>
+                    </span>
+                    <span><strong>Mobile:</strong>
+                        <a href="tel:+917045084197" class="contact-link">+91 7045084197</a></span>
                 </div>
                 <div class="contact-item">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                        class="lucide lucide-mail mr-2">
-                        <rect width="20" height="16" x="2" y="4" rx="2" />
-                        <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
-                    </svg>
-                    <strong>Email:</strong>
-                    <a href="mailto:ppalsambkar04@gmail.com" class="contact-link">ppalsambkar04@gmail.com</a>
+                    <span class="icon-wrap">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect width="20" height="16" x="2" y="4" rx="2" />
+                            <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+                        </svg>
+                    </span>
+                    <span><strong>Email:</strong>
+                        <a href="mailto:ppalsambkar04@gmail.com" class="contact-link">ppalsambkar04@gmail.com</a></span>
                 </div>
                 <div class="contact-item">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                        class="lucide lucide-instagram mr-2">
-                        <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
-                        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
-                        <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
-                    </svg>
-                    <strong>Instagram:</strong>
-                    <a href="https://www.instagram.com/poojapal_22" target="_blank" class="contact-link">poojapal_22</a>
+                    <span class="icon-wrap">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
+                            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+                            <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
+                        </svg>
+                    </span>
+                    <span><strong>Instagram:</strong>
+                        <a href="https://www.instagram.com/poojapal_22" target="_blank" class="contact-link">poojapal_22</a></span>
                 </div>
             </div>
         </section>
 
     </main>
 
-    <div id="lightbox" class="lightbox">
-        <span class="close">&times;</span>
-        <img class="lightbox-content" id="lightbox-img">
-        <div id="caption"></div>
-    </div>
-
     <!-- Full-view container -->
     <div id="fullview"
-        style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); justify-content:center; align-items:center; z-index:9999;">
-        <button id="close_fullview"
-            style="position:absolute; top:20px; right:30px; font-size:30px; background:none; border:none; color:white; cursor:pointer;">&times;</button>
-        <img id="fullview_img" style="max-width:90%; max-height:90%; margin:auto; display:block;">
+        style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; justify-content:center; align-items:center; z-index:9999;">
+        <button id="close_fullview" class="fullview-close"
+            style="position:absolute; top:20px; right:30px; background:none; color:white; cursor:pointer;">&times;</button>
+        <button id="fullview-prev" class="fullview-nav fullview-nav--prev" aria-label="Previous image">
+            <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m15 18-6-6 6-6" />
+            </svg>
+        </button>
+        <img id="fullview_img" style="max-width:85%; max-height:88%; margin:auto; display:block;">
+        <button id="fullview-next" class="fullview-nav fullview-nav--next" aria-label="Next image">
+            <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m9 18 6-6-6-6" />
+            </svg>
+        </button>
+        <div id="fullview-counter" class="fullview-counter"></div>
     </div>
     <!-- Carousel-Fullview -->
     <div id="carousel-fullview"
-        style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); justify-content:center; align-items:center; z-index:9999;">
-        <button id="carousel-close"
-            style="position:absolute; top:20px; right:30px; font-size:30px; background:none; border:none; color:white; cursor:pointer;">&times;</button>
-        <img id="carousel-img" style="max-width:90%; max-height:90%; margin:auto; display:block;">
+        style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; justify-content:center; align-items:center; z-index:9999;">
+        <button id="carousel-close" class="fullview-close"
+            style="position:absolute; top:20px; right:30px; background:none; color:white; cursor:pointer;">&times;</button>
+        <button id="carousel-prev" class="fullview-nav fullview-nav--prev" aria-label="Previous image">
+            <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m15 18-6-6 6-6" />
+            </svg>
+        </button>
+        <img id="carousel-img" style="max-width:85%; max-height:88%; margin:auto; display:block;">
+        <button id="carousel-next" class="fullview-nav fullview-nav--next" aria-label="Next image">
+            <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m9 18 6-6-6-6" />
+            </svg>
+        </button>
+        <div id="carousel-fullview-counter" class="fullview-counter"></div>
     </div>
 
 
@@ -755,6 +1102,9 @@
         // Function to set the active link
         function setActiveLink(clickedElement) {
             document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+            });
+            document.querySelectorAll('.tab-link').forEach(link => {
                 link.classList.remove('active');
             });
             clickedElement.classList.add('active');
@@ -783,7 +1133,7 @@
                             behavior: 'smooth'
                         });
                         mainNav.classList.remove('is-open');
-                        hamburgerBtn.classList.remove('hidden');
+                        hamburgerBtn.classList.remove('is-hidden');
                     }
                 }
             });
@@ -796,18 +1146,18 @@
 
         hamburgerBtn.addEventListener('click', () => {
             mainNav.classList.add('is-open');
-            hamburgerBtn.classList.add('hidden');
+            hamburgerBtn.classList.add('is-hidden');
         });
 
         closeBtn.addEventListener('click', () => {
             mainNav.classList.remove('is-open');
-            hamburgerBtn.classList.remove('hidden');
+            hamburgerBtn.classList.remove('is-hidden');
         });
 
         document.addEventListener('click', (event) => {
             if (mainNav.classList.contains('is-open') && !mainNav.contains(event.target) && !hamburgerBtn.contains(event.target)) {
                 mainNav.classList.remove('is-open');
-                hamburgerBtn.classList.remove('hidden');
+                hamburgerBtn.classList.remove('is-hidden');
             }
         });
 
@@ -837,7 +1187,7 @@
         window.addEventListener('scroll', () => {
             const header = document.querySelector('header');
             if (window.scrollY > 100) {
-                header.style.boxShadow = '0 2px 20px rgba(74, 105, 189, 0.1)';
+                header.style.boxShadow = '0 2px 24px rgba(0, 0, 0, 0.35)';
             } else {
                 header.style.boxShadow = 'none';
             }
@@ -847,12 +1197,14 @@
         const carouselImages = document.getElementById('carousel-images');
         const prevBtn = document.getElementById('prev-btn');
         const nextBtn = document.getElementById('next-btn');
+        const carouselSlides = Array.from(carouselImages.children);
         let currentImageIndex = 0;
-        const totalImages = carouselImages.children.length;
+        const totalImages = carouselSlides.length;
 
         function updateCarousel() {
-            const imageWidth = carouselImages.children[0].offsetWidth;
-            carouselImages.style.transform = `translateX(-${currentImageIndex * imageWidth}px)`;
+            carouselSlides.forEach((slide, i) => {
+                slide.classList.toggle('active', i === currentImageIndex);
+            });
         }
 
         nextBtn.addEventListener('click', () => {
@@ -865,7 +1217,7 @@
             updateCarousel();
         });
 
-        window.addEventListener('resize', updateCarousel);
+        updateCarousel();
 
         // --- Gallery Category Logic ---
         const galleryHeading = document.getElementById('gallery-heading');
@@ -874,6 +1226,9 @@
         const fullview = document.getElementById('fullview');
         const fullview_img = document.getElementById('fullview_img');
         const close_fullview = document.getElementById('close_fullview');
+        const fullviewPrev = document.getElementById('fullview-prev');
+        const fullviewNext = document.getElementById('fullview-next');
+        const fullviewCounter = document.getElementById('fullview-counter');
 
         const galleryData = {
             figurative: {
@@ -1022,15 +1377,18 @@
                 title: "Exhibition Pictures",
                 images: [
                     { src: "Images/e1.jpg", title: "", details: "" }, { src: "Images/e2.jpg", title: "", details: "" },
-                    //{ src: "Images/e3.jpg", title: "", details: "" }, 
+                    { src: "Images/e3.jpeg", title: "", details: "" }, 
                     { src: "Images/e4.jpg", title: "", details: "" },
                     { src: "Images/e5.jpg", title: "", details: "" }, { src: "Images/e6.jpg", title: "", details: "" },
                     { src: "Images/e7.jpg", title: "", details: "" }, { src: "Images/e8.jpg", title: "", details: "" },
                     { src: "Images/e9.jpg", title: "", details: "" }, 
-                    //{ src: "Images/e10.jpg", title: "", details: "" },
+                    { src: "Images/e10.jpeg", title: "", details: "" },
                 ]
             }
         };
+
+        let currentGalleryImages = [];
+        let currentGalleryIndex = 0;
 
         function updateGallery(category) {
             const data = galleryData[category];
@@ -1038,10 +1396,12 @@
 
             galleryHeading.textContent = data.title;
             artGrid.innerHTML = ''; // Clear previous content
+            currentGalleryImages = data.images;
 
-            data.images.forEach(image => {
+            data.images.forEach((image, index) => {
                 const artItem = document.createElement('div');
                 artItem.className = 'art-item';
+                artItem.dataset.index = index;
                 artItem.innerHTML = `
             <img src="${image.src}" alt="${image.title || 'Artwork'}">
             <div class="art-overlay">
@@ -1051,21 +1411,47 @@
         `;
                 artGrid.appendChild(artItem);
             });
+
+            document.querySelectorAll('.tab-link').forEach(tab => {
+                tab.classList.toggle('active', tab.dataset.category === category);
+            });
+        }
+
+        function showFullviewImage(index) {
+            if (!currentGalleryImages.length) return;
+            currentGalleryIndex = (index + currentGalleryImages.length) % currentGalleryImages.length;
+            const image = currentGalleryImages[currentGalleryIndex];
+            fullview_img.src = image.src;
+            fullview_img.alt = image.title || 'Artwork';
+            fullviewCounter.textContent = `${currentGalleryIndex + 1} / ${currentGalleryImages.length}`;
         }
 
         // Event delegation for opening full view
         artGrid.addEventListener('click', (e) => {
-            const img = e.target.closest('img');
-            if (!img) return;
+            const item = e.target.closest('.art-item');
+            if (!item) return;
             fullview.style.display = 'flex';
-            fullview_img.src = img.src;
-            fullview_img.alt = img.alt || '';
+            showFullviewImage(Number(item.dataset.index));
         });
+
+        fullviewPrev.addEventListener('click', () => showFullviewImage(currentGalleryIndex - 1));
+        fullviewNext.addEventListener('click', () => showFullviewImage(currentGalleryIndex + 1));
 
         // Close button
         close_fullview.addEventListener('click', () => {
             fullview.style.display = 'none';
             fullview_img.src = '';
+        });
+
+        // Keyboard navigation for gallery full view
+        document.addEventListener('keydown', (e) => {
+            if (fullview.style.display !== 'flex') return;
+            if (e.key === 'ArrowLeft') showFullviewImage(currentGalleryIndex - 1);
+            if (e.key === 'ArrowRight') showFullviewImage(currentGalleryIndex + 1);
+            if (e.key === 'Escape') {
+                fullview.style.display = 'none';
+                fullview_img.src = '';
+            }
         });
 
         // Gallery menu links
@@ -1086,18 +1472,34 @@
         const carouselFullview = document.getElementById('carousel-fullview');
         const carouselImg = document.getElementById('carousel-img');
         const carouselClose = document.getElementById('carousel-close');
+        const carouselPrevFull = document.getElementById('carousel-prev');
+        const carouselNextFull = document.getElementById('carousel-next');
+        const carouselFullviewCounter = document.getElementById('carousel-fullview-counter');
 
-        carouselLinks.forEach(link => {
+        const carouselItems = Array.from(carouselLinks).map(link => ({
+            src: link.getAttribute('href'),
+            alt: link.querySelector('img').alt || ''
+        }));
+        let currentCarouselFullIndex = 0;
+
+        function showCarouselFullview(index) {
+            currentCarouselFullIndex = (index + carouselItems.length) % carouselItems.length;
+            const item = carouselItems[currentCarouselFullIndex];
+            carouselImg.src = item.src;
+            carouselImg.alt = item.alt;
+            carouselFullviewCounter.textContent = `${currentCarouselFullIndex + 1} / ${carouselItems.length}`;
+        }
+
+        carouselLinks.forEach((link, index) => {
             link.addEventListener('click', e => {
                 e.preventDefault(); // Prevent opening in a new tab
-                const imgSrc = link.getAttribute('href');
-                const imgAlt = link.querySelector('img').alt || '';
-
-                carouselImg.src = imgSrc;
-                carouselImg.alt = imgAlt;
                 carouselFullview.style.display = 'flex';
+                showCarouselFullview(index);
             });
         });
+
+        carouselPrevFull.addEventListener('click', () => showCarouselFullview(currentCarouselFullIndex - 1));
+        carouselNextFull.addEventListener('click', () => showCarouselFullview(currentCarouselFullIndex + 1));
 
         // Close button
         carouselClose.addEventListener('click', () => {
@@ -1105,12 +1507,17 @@
             carouselImg.src = '';
         });
 
-
-
-
+        // Keyboard navigation for hero carousel full view
+        document.addEventListener('keydown', (e) => {
+            if (carouselFullview.style.display !== 'flex') return;
+            if (e.key === 'ArrowLeft') showCarouselFullview(currentCarouselFullIndex - 1);
+            if (e.key === 'ArrowRight') showCarouselFullview(currentCarouselFullIndex + 1);
+            if (e.key === 'Escape') {
+                carouselFullview.style.display = 'none';
+                carouselImg.src = '';
+            }
+        });
     </script>
-    </div>
-
 </body>
 
 </html>
